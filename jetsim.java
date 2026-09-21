@@ -44,11 +44,15 @@ public class jetsim {
         else if (event <= 25) {
             unknownAircraft();
         }
+        else if (event <= 50) {
+            enemyGround();
+        }
         else {
             System.out.println("No events occurred during this part of the flight.");
+            
         }
 
-        flightDecision();
+       flightDecision();
     }
 
     public void flightDecision() {
@@ -123,6 +127,10 @@ public class jetsim {
         else if ("continue".equals(choice)) {
             System.out.println("You continue on your flight.");
         }
+    }
+
+    public void enemyGround(){
+
     }
 
     public void enemyAircraft() {
