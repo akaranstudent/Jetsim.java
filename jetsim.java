@@ -15,6 +15,9 @@ public class jetsim {
     int points;
     int bankedPoints;
 
+    int enemiesDestroyed;
+    int missionTarget;
+
     public jetsim(String n, int m, int b, int speed, int f) {
         jet = n;
         numMissiles = m;
@@ -25,6 +28,9 @@ public class jetsim {
         maxMissiles = m;
         maxBombs = b;
         maxFuel = f;
+
+        enemiesDestroyed = 0;
+        missionTarget = (int)(Math.random() * 5) + 1;
     }
 
     public void displayInfo() {
@@ -33,6 +39,7 @@ public class jetsim {
         System.out.println("Number of Bombs: " + numBombs);
         System.out.println("Max Speed: " + maxSpeed + " km/h");
         System.out.println("Fuel Capacity: " + fuel + " liters");
+        System.out.println("Enemies Destroyed: " + enemiesDestroyed + "/" + missionTarget);
     }
 
     public void randomEvent() {
@@ -49,10 +56,9 @@ public class jetsim {
         }
         else {
             System.out.println("No events occurred during this part of the flight.");
-            
         }
 
-       flightDecision();
+        checkResources();
     }
 
     public void flightDecision() {
@@ -64,7 +70,6 @@ public class jetsim {
         if ("continue".equals(choice)) {
             fuel -= 500;
             displayInfo();
-            checkResources();
             randomEvent();
         }
         else if ("return".equals(choice)) {
@@ -75,12 +80,26 @@ public class jetsim {
     public void returnToBase() {
         Scanner scanner = new Scanner(System.in);
 
+        if (enemiesDestroyed >= missionTarget) {
+            bankedPoints += points;
+            System.out.println("Mission complete!");
+            System.out.println("All points have been secured.");
+        }
+        else {
+            points = points / 2;
+            bankedPoints += points;
+            System.out.println("Mission incomplete.");
+            System.out.println("Some points were lost.");
+        }
+
+        points = 0;
+
         fuel = maxFuel;
         numMissiles = maxMissiles;
         numBombs = maxBombs;
 
-        bankedPoints += points;
-        points = 0;
+        enemiesDestroyed = 0;
+        missionTarget = (int)(Math.random() * 5) + 1;
 
         System.out.println("You have returned to base.");
         System.out.println("Your fuel and weapons have been refilled.");
@@ -129,7 +148,7 @@ public class jetsim {
         }
     }
 
-    public void enemyGround(){
+    public void enemyGround() {
 
     }
 
@@ -143,16 +162,21 @@ public class jetsim {
 
             if (numMissiles > 0) {
                 numMissiles--;
+                enemiesDestroyed++;
                 System.out.println("You engage the enemy aircraft successfully.");
+                System.out.println("Enemy destroyed!");
             }
             else {
                 int result = (int)(Math.random() * 2) + 1;
 
                 if (result == 1) {
+                    enemiesDestroyed++;
                     System.out.println("You win in a dogfight.");
+                    System.out.println("Enemy destroyed!");
                 }
                 else {
                     System.out.println("You lose in a dogfight.");
+                    gameOver();
                 }
             }
         }
@@ -181,6 +205,9 @@ public class jetsim {
         }
         else if (numMissiles <= 2 || numBombs <= 2) {
             System.out.println("You are low on missiles or bombs and should return to base.");
+            flightDecision();
+        }
+        else {
             flightDecision();
         }
     }
