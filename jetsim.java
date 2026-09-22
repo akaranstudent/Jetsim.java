@@ -1,3 +1,16 @@
+/*
+Commenter: William Xiong
+
+You should have separate files for objects, like a enemy object maybe?
+You should at least have .toLowerCase and .Strip for user input, and so it doesn't immediately stop if the user types in smth wrong
+or don't immediately js stop the code, maybe a while loop ig
+have user inputs be more intuitive, like when u ask engage or evade, say what they should type
+uh
+fuel can run out and game will continue. 
+
+
+*/
+
 import java.util.Scanner;
 
 public class jetsim {
