@@ -18,7 +18,7 @@ public class jetsim {
     int enemiesDestroyed;
     int missionTarget = 3;
 
-    public jetsim(String n, int m, int b, int speed, int f) {
+    public jetsim(String n, int m, int b, int speed, int f) { // class constructor to initialize jet properties I like the all choices the user gets - Leo
         jet = n;
         numMissiles = m;
         numBombs = b;
@@ -280,7 +280,7 @@ System.out.println();
     }
 
     // Checks fuel and weapons and decide next action based on resources
-    public void checkResources() {
+    public void checkResources() { // fuel is able to reach negative values and the game will continue until the user decides to return to base or crash - Leo
 
         if (fuel <= 500) {
             System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
@@ -299,7 +299,7 @@ System.out.println();
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { // try using a while loop to keep the game going until the user decides to quit maybe there could be a while loop with breaks to meet requirements - Leo
 
         Scanner scanner = new Scanner(System.in);
 
@@ -339,6 +339,6 @@ System.out.println();
         }
 
         playerJet.displayInfo();
-        playerJet.randomEvent();
+        playerJet.randomEvent(); // This function adds a lot of unexpected events to the game and makes it really fun - Leo
     }
 }
