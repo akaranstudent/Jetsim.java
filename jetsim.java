@@ -16,7 +16,7 @@ public class jetsim {
     int bankedPoints;
 
     int enemiesDestroyed;
-    int missionTarget;
+    int missionTarget = 3;
 
     public jetsim(String n, int m, int b, int speed, int f) {
         jet = n;
@@ -30,7 +30,6 @@ public class jetsim {
         maxFuel = f;
 
         enemiesDestroyed = 0;
-        missionTarget = (int)(Math.random() * 5) + 1;
     }
 
     public void displayInfo() {
@@ -38,13 +37,16 @@ public class jetsim {
         System.out.println("Number of Missiles: " + numMissiles);
         System.out.println("Number of Bombs: " + numBombs);
         System.out.println("Max Speed: " + maxSpeed + " km/h");
-        System.out.println("Fuel Capacity: " + fuel + " liters");
+        System.out.println("Fuel: " + fuel + " liters");
         System.out.println("Enemies Destroyed: " + enemiesDestroyed + "/" + missionTarget);
+        System.out.println("Current Points: " + points);
+        System.out.println("Banked Points: " + bankedPoints);
     }
 
+    // Randomly chooses an event
     public void randomEvent() {
         int event = (int)(Math.random() * 100) + 1;
-
+System.out.println();
         if (event <= 10) {
             enemyAircraft();
         }
@@ -61,6 +63,7 @@ public class jetsim {
         checkResources();
     }
 
+    // Decides whether to continue flying or return to base
     public void flightDecision() {
         Scanner scanner = new Scanner(System.in);
 
@@ -77,6 +80,7 @@ public class jetsim {
         }
     }
 
+    // Returns to base, banks points and has option to end game without risking points
     public void returnToBase() {
         Scanner scanner = new Scanner(System.in);
 
@@ -86,10 +90,16 @@ public class jetsim {
             System.out.println("All points have been secured.");
         }
         else {
-            points = points / 2;
+            points -= 500;
+
+            if (points < 0) {
+                points = 0;
+            }
+
             bankedPoints += points;
+
             System.out.println("Mission incomplete.");
-            System.out.println("Some points were lost.");
+            System.out.println("You lost 500 points for not meeting the quota.");
         }
 
         points = 0;
@@ -99,7 +109,6 @@ public class jetsim {
         numBombs = maxBombs;
 
         enemiesDestroyed = 0;
-        missionTarget = (int)(Math.random() * 5) + 1;
 
         System.out.println("You have returned to base.");
         System.out.println("Your fuel and weapons have been refilled.");
@@ -125,6 +134,7 @@ public class jetsim {
         System.out.println("Final Points: " + bankedPoints);
     }
 
+    // unknown aircraft with chance of being an enemy or ally 
     public void unknownAircraft() {
         Scanner scanner = new Scanner(System.in);
 
@@ -140,7 +150,9 @@ public class jetsim {
                 enemyAircraft();
             }
             else {
-                System.out.println("You identify it as an ally and continue on your flight.");
+                points += 50;
+                System.out.println("You identify it as an ally.");
+                System.out.println("You earned 50 points.");
             }
         }
         else if ("continue".equals(choice)) {
@@ -148,10 +160,78 @@ public class jetsim {
         }
     }
 
+    // enemy ground targets with normal forces and anti-air forces with chance of being destroyed or shooting down the player
     public void enemyGround() {
+        Scanner scanner = new Scanner(System.in);
 
+        int target = (int)(Math.random() * 4) + 1;
+
+        if (target <= 3) {
+            System.out.println("Enemy ground installation spotted.");
+            System.out.print("Will you engage or continue? ");
+            String choice = scanner.nextLine();
+
+            if ("engage".equals(choice)) {
+
+                if (numBombs > 0) {
+                    numBombs--;
+                    enemiesDestroyed++;
+                    points += 100;
+
+                    System.out.println("You destroy the enemy ground installation.");
+                    System.out.println("You earned 100 points.");
+                }
+                else {
+                    System.out.println("You have no bombs left.");
+                }
+            }
+            else if ("continue".equals(choice)) {
+                System.out.println("You continue on your flight.");
+            }
+        }
+        else {
+            System.out.println("Enemy anti-air installation spotted.");
+            System.out.print("Will you engage or evade? ");
+            String choice = scanner.nextLine();
+
+            if ("engage".equals(choice)) {
+
+                if (numBombs > 0) {
+                    numBombs--;
+
+                    int result = (int)(Math.random() * 100) + 1;
+
+                    if (result <= 15) {
+                        System.out.println("The anti-air installation shoots you down.");
+                        gameOver();
+                    }
+                    else {
+                        enemiesDestroyed++;
+                        points += 175;
+
+                        System.out.println("You destroy the anti-air installation.");
+                        System.out.println("You earned 175 points.");
+                    }
+                }
+                else {
+                    int result = (int)(Math.random() * 100) + 1;
+
+                    if (result <= 50) {
+                        System.out.println("The anti-air installation shoots you down.");
+                        gameOver();
+                    }
+                    else {
+                        System.out.println("You have no bombs, but you survive the anti-air fire.");
+                    }
+                }
+            }
+            else if ("evade".equals(choice)) {
+                System.out.println("You evade the anti-air installation.");
+            }
+        }
     }
 
+    // enemy aircraft that you can shoot or evade with chance of winning or losing in a dogfight
     public void enemyAircraft() {
         Scanner scanner = new Scanner(System.in);
 
@@ -163,16 +243,20 @@ public class jetsim {
             if (numMissiles > 0) {
                 numMissiles--;
                 enemiesDestroyed++;
+                points += 100;
+
                 System.out.println("You engage the enemy aircraft successfully.");
-                System.out.println("Enemy destroyed!");
+                System.out.println("You earned 100 points.");
             }
             else {
                 int result = (int)(Math.random() * 2) + 1;
 
                 if (result == 1) {
                     enemiesDestroyed++;
+                    points += 200;
+
                     System.out.println("You win in a dogfight.");
-                    System.out.println("Enemy destroyed!");
+                    System.out.println("You earned 200 points.");
                 }
                 else {
                     System.out.println("You lose in a dogfight.");
@@ -193,13 +277,14 @@ public class jetsim {
         }
     }
 
+    // Checks fuel and weapons and decide next action based on resources
     public void checkResources() {
 
-        if (fuel <= 0) {
-            System.out.println("You have run out of fuel and crashed.");
+        if (fuel <= 500) {
+            System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
             gameOver();
         }
-        else if (fuel < 500) {
+        else if (fuel < 1000) {
             System.out.println("You are low on fuel and should return to base.");
             flightDecision();
         }
@@ -223,9 +308,13 @@ public class jetsim {
         System.out.println("Welcome to the Jet Simulator!");
         System.out.println("Please enter the name of a jet to fly:");
         System.out.println("A-10");
+        a10.displayInfo();
+       System.out.println("");
         System.out.println("F-16");
+        f16.displayInfo();
+       System.out.println("");
         System.out.println("F/A-18");
-
+        f18.displayInfo();
         String choice = scanner.nextLine();
 
         jetsim playerJet;
