@@ -8,6 +8,9 @@ have user inputs be more intuitive, like when u ask engage or evade, say what th
 uh
 fuel can run out and game will continue. 
 
+Commenter: Thor F
+Good things: The simulations are good
+Bad things: It doesnt have any try excepts or other railguards for user input. Also no instructions for how to play
 
 */
 
