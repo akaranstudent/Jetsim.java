@@ -33,6 +33,7 @@ public class jetsim {
     }
 
     public void displayInfo() {
+        System.out.println("");
         System.out.println("Jet Name: " + jet);
         System.out.println("Number of Missiles: " + numMissiles);
         System.out.println("Number of Bombs: " + numBombs);
@@ -129,6 +130,7 @@ System.out.println();
     }
 
     public void gameOver() {
+        System.out.println("");
         System.out.println("GAME OVER");
         displayInfo();
         System.out.println("Final Points: " + bankedPoints);
