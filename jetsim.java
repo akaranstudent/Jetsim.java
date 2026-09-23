@@ -1,5 +1,21 @@
 import java.util.Scanner;
 
+/*   
+Commenter: William Xiong   
+   
+You should have separate files for objects, like a enemy object maybe?   
+You should at least have .toLowerCase and .Strip for user input, and so it doesn't immediately stop if the user types in smth wrong   
+or don't immediately js stop the code, maybe a while loop ig   
+have user inputs be more intuitive, like when u ask engage or evade, say what they should type   
+uh   
+fuel can run out and game will continue.    
+   
+Commenter: Thor F   
+Good things: The simulations are good  
+Bad things: It doesnt have any try excepts or other railguards for user input. Also no instructions for how to play   
+   
+*/   
+
 public class jetsim {
 
     private String jet;
@@ -20,6 +36,7 @@ public class jetsim {
 
     private boolean flightActive = true;
 
+    // class constructor to initialize jet properties I like the all choices the user gets - Leo
     public jetsim(String jetName, int missileCount, int bombCount, int speed, int fuelAmount) {
         jet = jetName;
         numMissiles = missileCount;
@@ -138,37 +155,47 @@ public class jetsim {
             System.out.println("No events occurred during this part of the flight.");
         }
 
-        checkResources(scanner);
+        if (isFlightActive()) {
+            checkResources(scanner);
+        }
     }
 
     // Decides whether to continue flying or return to base
-    public void flightDecision(Scanner scanner) {
+    // Decides whether to continue flying or return to base
+public void flightDecision(Scanner scanner) {
 
-        String choice = "";
+    String choice = "";
 
-        while (!choice.equals("continue") && !choice.equals("return")) {
+    while (!choice.equals("continue") && !choice.equals("return")) {
 
-            System.out.print("Do you want to continue flying or return to base? Type continue or return: ");
+        System.out.print("Do you want to continue flying or return to base? Type continue or return: ");
 
-            choice = scanner.nextLine().toLowerCase().trim();
+        choice = scanner.nextLine().toLowerCase().trim();
 
-            if (!choice.equals("continue") && !choice.equals("return")) {
-                System.out.println("Invalid choice. Please type continue or return.");
-            }
+        if (!choice.equals("continue") && !choice.equals("return")) {
+            System.out.println("Invalid choice. Please type continue or return.");
         }
+    }
 
-        if ("continue".equals(choice)) {
+    if ("continue".equals(choice)) {
 
-            setFuel(getFuel() - 500);
+        setFuel(getFuel() - 500);
 
+        if (getFuel() <= 500) {
+            System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
+
+            gameOver();
+        }
+        else {
             displayInfo();
             displayPoints();
         }
-        else if ("return".equals(choice)) {
-
-            returnToBase(scanner);
-        }
     }
+    else if ("return".equals(choice)) {
+
+        returnToBase(scanner);
+    }
+}
 
     // Returns to base, banks points and has option to end game without risking points
     public void returnToBase(Scanner scanner) {
@@ -449,12 +476,13 @@ public class jetsim {
             else {
 
                 System.out.println("You are unable to evade the enemy aircraft.");
+                gameOver();
             }
         }
     }
 
     // Checks fuel and weapons and decide next action based on resources
-    public void checkResources(Scanner scanner) {
+    public void checkResources(Scanner scanner) { // fuel is able to reach negative values and the game will continue until the user decides to return to base or crash - Leo
 
         if (getEnemiesDestroyed() >= missionTarget) {
 
