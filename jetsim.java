@@ -488,9 +488,9 @@ public void flightDecision(Scanner scanner) {
 
             System.out.println("You have destroyed enough enemies to complete the mission.");
 
-            flightDecision(scanner);
+           
         }
-        else if (getFuel() <= 500) {
+         if (getFuel() <= 500) {
 
             System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
 
@@ -500,17 +500,17 @@ public void flightDecision(Scanner scanner) {
 
             System.out.println("You are low on fuel and should return to base.");
 
-            flightDecision(scanner);
+            
         }
-        else if (getNumMissiles() <= 2 || getNumBombs() <= 2) {
+         if (getNumMissiles() <= 2 || getNumBombs() <= 2) {
 
             System.out.println("You are low on missiles or bombs and should return to base.");
 
-            flightDecision(scanner);
+            
         }
-        else {
+       
 
             flightDecision(scanner);
-        }
+        
     }
 }
