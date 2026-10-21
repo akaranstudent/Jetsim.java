@@ -50,9 +50,38 @@ public class simRunner {
                 return;
         }
 DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 15, 35, 60, 3);
-DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 5, 20, 45, 5);
-DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 40, 70, 7);
+DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 20, 45, 5);
+DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 30, 40, 7);
 DeploymentLocation[] locations = {coastalBase, desertBase, mountainBase};
+DeploymentLocation playerLocation;
+
+for(int i=0;i<locations.length;i++){
+    System.out.println(locations[i].toString());
+}
+String choice2 = scanner.nextLine().toLowerCase().trim();
+while (!choice2.equals("coastal base") && !choice2.equals("desert base") && !choice2.equals("mountain base")) {
+            System.out.println("Invalid location choice. Please type Coastal Base, Desert Base, or Mountain Base.");
+            System.out.print("Please enter the name of a location to deploy to: ");
+            choice2 = scanner.nextLine().toLowerCase().trim();
+        }
+
+        switch (choice2) {
+            case "coastal base":
+                playerLocation = locations[0];
+                break;
+
+            case "desert base":
+                playerLocation = locations[1];
+                break;
+
+            case "mountain base":
+                playerLocation = locations[2];
+                break;
+
+            default:
+                return;
+        }
+       playerJet.setPlayerLocation(playerLocation);
         playerJet.displayInfo();
 
         // Dynamic game loop controlled by the flightActive boolean

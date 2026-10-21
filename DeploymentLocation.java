@@ -32,4 +32,13 @@ private int winQuota;
     public int getWinQuota() {
         return winQuota;
     }
-}
+    public String toString() {
+        return "Deployment Location: " + name + "\n" +
+               "Aircraft Chance: " + aircraftChance + "%\n" +
+               "Ground Chance: " + groundChance + "%\n" +
+               "Unknown Aircraft Chance: " + unknownAircraftChance + "%\n" +
+               "Win Quota: " + winQuota;
+    }
+
+    }
+

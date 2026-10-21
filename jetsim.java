@@ -32,9 +32,10 @@ public class jetsim {
     private int bankedPoints;
 
     private int enemiesDestroyed;
-    private int missionTarget = 3;
 
+    private DeploymentLocation playerLocation;
     private boolean flightActive = true;
+    
 
     // class constructor to initialize jet properties I like the all choices the user gets - Leo
     public jetsim(String jetName, int missileCount, int bombCount, int speed, int fuelAmount) {
@@ -43,6 +44,7 @@ public class jetsim {
         numBombs = bombCount;
         maxSpeed = speed;
         fuel = fuelAmount;
+        playerLocation = null;
 
         maxMissiles = missileCount;
         maxBombs = bombCount;
@@ -51,11 +53,15 @@ public class jetsim {
         enemiesDestroyed = 0;
     }
 
-    // overloaded constructor
-    public jetsim(String jetName, int missileCount, int bombCount, int speed) {
-        this(jetName, missileCount, bombCount, speed, 5000);
-    }
 
+/**
+ * Sets the player's current deployment location.
+ * @param location the location selected by the player
+ */
+public void setPlayerLocation(DeploymentLocation location)
+{
+    this.playerLocation = location;
+}
     // Getters
     public String getJet() {
         return jet;
@@ -123,14 +129,18 @@ public class jetsim {
     }
 
     public void displayInfo() {
-        System.out.println("");
-        System.out.println("Jet Name: " + getJet());
-        System.out.println("Number of Missiles: " + getNumMissiles());
-        System.out.println("Number of Bombs: " + getNumBombs());
-        System.out.println("Max Speed: " + getMaxSpeed() + " km/h");
-        System.out.println("Fuel: " + getFuel() + " liters");
-        System.out.println("Enemies Destroyed: " + getEnemiesDestroyed() + "/" + missionTarget);
+    System.out.println("");
+    System.out.println("Jet Name: " + getJet());
+    System.out.println("Number of Missiles: " + getNumMissiles());
+    System.out.println("Number of Bombs: " + getNumBombs());
+    System.out.println("Max Speed: " + getMaxSpeed() + " km/h");
+    System.out.println("Fuel: " + getFuel() + " liters");
+
+    if (playerLocation != null) {
+        System.out.println("Deployment Location: " + playerLocation.getName());
+        System.out.println("Enemies Destroyed: " + getEnemiesDestroyed() + "/" + playerLocation.getWinQuota());
     }
+}
 
     public void displayPoints() {
         System.out.println("Current Points: " + getPoints());
@@ -142,22 +152,16 @@ public class jetsim {
 
         int eventChance = (int)(Math.random() * 100) + 1;
 
-        if (eventChance <= 10) {
-            enemyAircraft(scanner);
-        }
-        else if (eventChance <= 25) {
-            unknownAircraft(scanner);
-        }
-        else if (eventChance <= 50) {
-            enemyGround(scanner);
-        }
-        else {
-            System.out.println("No events occurred during this part of the flight.");
-        }
-
-        if (isFlightActive()) {
-            checkResources(scanner);
-        }
+        if (eventChance <= playerLocation.getAircraftChance()) {
+    enemyAircraft(scanner);
+} else if (eventChance <= playerLocation.getGroundChance()) {
+    enemyGround(scanner);
+} else if (eventChance <= playerLocation.getUnknownAircraftChance()) {
+    unknownAircraft(scanner);
+} else {
+    System.out.println("No events occurred during this part of the flight.");
+    checkResources(scanner);
+}
     }
 
     // Decides whether to continue flying or return to base
@@ -200,7 +204,7 @@ public void flightDecision(Scanner scanner) {
     // Returns to base, banks points and has option to end game without risking points
     public void returnToBase(Scanner scanner) {
 
-        if (getEnemiesDestroyed() >= missionTarget) {
+        if (getEnemiesDestroyed() >= playerLocation.getWinQuota()) {
 
             setBankedPoints(getBankedPoints() + getPoints());
 
@@ -484,7 +488,7 @@ public void flightDecision(Scanner scanner) {
     // Checks fuel and weapons and decide next action based on resources
     public void checkResources(Scanner scanner) { // fuel is able to reach negative values and the game will continue until the user decides to return to base or crash - Leo
 
-        if (getEnemiesDestroyed() >= missionTarget) {
+        if (getEnemiesDestroyed() >= playerLocation.getWinQuota()) {
 
             System.out.println("You have destroyed enough enemies to complete the mission.");
 
