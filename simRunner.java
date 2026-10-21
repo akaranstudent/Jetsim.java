@@ -49,7 +49,10 @@ public class simRunner {
             default:
                 return;
         }
-
+DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 15, 35, 60, 3);
+DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 5, 20, 45, 5);
+DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 40, 70, 7);
+DeploymentLocation[] locations = {coastalBase, desertBase, mountainBase};
         playerJet.displayInfo();
 
         // Dynamic game loop controlled by the flightActive boolean
