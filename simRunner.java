@@ -17,7 +17,7 @@ public class simRunner {
         jetsim f16 = new jetsim("F-16", 6, 4, 2120, 3160);
         jetsim f18 = new jetsim("F/A-18", 5, 5, 1915, 6200);
 
-        System.out.println("Welcome to the Jet Simulator! To play, you will choose a jet and engage in various missions. Your goal is to destroy enemy targets and earn points. Be careful, as running out of fuel can lead to mission failure while running out of weapons puts you at higher risk. Returning to base refuels/rearms and secures your points permamently but returning without meeting quota causes you to lose points. Enter your choices as seen on the screen");
+        System.out.println("Welcome to the Jet Simulator! To play, you will choose a jet along with a location to deploy at and engage in various missions. Your goal is to destroy enemy targets and earn points. Be careful, as running out of fuel can lead to mission failure while running out of weapons puts you at higher risk. Returning to base refuels/rearms and secures your points permamently but returning without meeting quota causes you to lose points. Enter your choices as seen on the screen");
 
         System.out.println("Please enter the name of a jet to fly:");
 
@@ -61,8 +61,8 @@ public class simRunner {
  * Creates the deployment locations available to the player.
  */
 DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 15, 35, 60, 3);
-DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 20, 45, 5);
-DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 30, 40, 7);
+DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 20, 45, 4);
+DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 30, 40, 5);
 
 // Object array created using new Type[size]
 DeploymentLocation[] locations = new DeploymentLocation[3];
@@ -102,6 +102,7 @@ if (locationsMeetingQuota < 0 || averageQuota < 0
 System.out.println("Total deployment locations created: "
         + DeploymentLocation.getLocationsCreated());
 System.out.println("Choose a location to deploy to: Coastal Base, Desert Base, or Mountain Base.");
+System.out.println("");
 for (int i = 0; i < locations.length; i++) {
     System.out.println(locations[i].toString());
     System.out.println("");

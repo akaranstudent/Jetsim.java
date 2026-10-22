@@ -258,7 +258,7 @@ public void flightDecision(Scanner scanner) {
         }
         else {
 
-            setPoints(getPoints() - 500);
+            setPoints(getPoints() - 200);
 
             if (getPoints() < 0) {
                 setPoints(0);
@@ -267,7 +267,7 @@ public void flightDecision(Scanner scanner) {
             setBankedPoints(getBankedPoints() + getPoints());
 
             System.out.println("Mission incomplete.");
-            System.out.println("You lost 500 points for not meeting the quota.");
+            System.out.println("You lost 200 points for not meeting the quota.");
         }
 
         setPoints(0);
