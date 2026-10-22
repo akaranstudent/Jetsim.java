@@ -1,7 +1,14 @@
 import java.util.Scanner;
 
+/**
+ * Runs the Jet Simulator and lets the player choose a jet and location.
+ */
 public class simRunner {
 
+    /**
+     * Starts the simulator and handles the player's choices.
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -14,7 +21,7 @@ public class simRunner {
 
         System.out.println("Please enter the name of a jet to fly:");
 
-      
+
         jetsim[] jets = {a10, f16, f18};
 
         for (int i = 0; i < jets.length; i++) {
@@ -50,6 +57,9 @@ public class simRunner {
                 return;
         }
 
+/**
+ * Creates the deployment locations available to the player.
+ */
 DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 15, 35, 60, 3);
 DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 20, 45, 5);
 DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 30, 40, 7);
@@ -72,7 +82,9 @@ for (DeploymentLocation location : locations) {
     quotaIndex++;
 }
 
-
+/**
+ * Tests the location methods using the created location array.
+ */
 int locationsMeetingQuota =
     DeploymentLocation.countLocationsWithQuota(locations, 3);
 
@@ -87,7 +99,8 @@ if (locationsMeetingQuota < 0 || averageQuota < 0
         || (foundLocation != null && foundLocation.getWinQuota() < 0)) {
     throw new IllegalStateException("Invalid deployment location data.");
 }
-
+System.out.println("Total deployment locations created: "
+        + DeploymentLocation.getLocationsCreated());
 System.out.println("Choose a location to deploy to: Coastal Base, Desert Base, or Mountain Base.");
 for (int i = 0; i < locations.length; i++) {
     System.out.println(locations[i].toString());
@@ -116,6 +129,8 @@ while (!choice2.equals("coastal base") && !choice2.equals("desert base") && !cho
             default:
                 return;
         }
+
+       // Sets the selected location for the player's jet.
        playerJet.setPlayerLocation(playerLocation);
         playerJet.displayInfo();
 

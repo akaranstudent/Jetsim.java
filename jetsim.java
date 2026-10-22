@@ -2,20 +2,23 @@ import java.util.Scanner;
 
 /*   
 Commenter: William Xiong   
-   
+
 You should have separate files for objects, like a enemy object maybe?   
 You should at least have .toLowerCase and .Strip for user input, and so it doesn't immediately stop if the user types in smth wrong   
 or don't immediately js stop the code, maybe a while loop ig   
 have user inputs be more intuitive, like when u ask engage or evade, say what they should type   
 uh   
 fuel can run out and game will continue.    
-   
+
 Commenter: Thor F   
 Good things: The simulations are good  
 Bad things: It doesnt have any try excepts or other railguards for user input. Also no instructions for how to play   
-   
+
 */   
 
+/**
+ * Stores the jet's resources and runs the player's flight decisions and events.
+ */
 public class jetsim {
 
     private String jet;
@@ -35,9 +38,17 @@ public class jetsim {
 
     private DeploymentLocation playerLocation;
     private boolean flightActive = true;
-    
+
 
     // class constructor to initialize jet properties I like the all choices the user gets - Leo
+    /**
+     * Creates a jet with its starting resources and speed.
+     * @param jetName the name of the jet
+     * @param missileCount the starting number of missiles
+     * @param bombCount the starting number of bombs
+     * @param speed the maximum speed
+     * @param fuelAmount the starting fuel amount
+     */
     public jetsim(String jetName, int missileCount, int bombCount, int speed, int fuelAmount) {
         jet = jetName;
         numMissiles = missileCount;
@@ -63,71 +74,88 @@ public void setPlayerLocation(DeploymentLocation location)
     this.playerLocation = location;
 }
     // Getters
+    /** @return the name of the jet */
     public String getJet() {
         return jet;
     }
 
+    /** @return the current number of missiles */
     public int getNumMissiles() {
         return numMissiles;
     }
 
+    /** @return the current number of bombs */
     public int getNumBombs() {
         return numBombs;
     }
 
+    /** @return the maximum speed of the jet */
     public int getMaxSpeed() {
         return maxSpeed;
     }
 
+    /** @return the current fuel amount */
     public int getFuel() {
         return fuel;
     }
 
+    /** @return the current unbanked points */
     public int getPoints() {
         return points;
     }
 
+    /** @return the points saved by returning to base */
     public int getBankedPoints() {
         return bankedPoints;
     }
 
+    /** @return the number of enemies destroyed in the current mission */
     public int getEnemiesDestroyed() {
         return enemiesDestroyed;
     }
 
+    /** @return true if the flight is still active */
     public boolean isFlightActive() {
         return flightActive;
     }
 
     // Setters
+    /** @param missileCount the new number of missiles */
     public void setNumMissiles(int missileCount) {
         numMissiles = missileCount;
     }
 
+    /** @param bombCount the new number of bombs */
     public void setNumBombs(int bombCount) {
         numBombs = bombCount;
     }
 
+    /** @param fuelAmount the new fuel amount */
     public void setFuel(int fuelAmount) {
         fuel = fuelAmount;
     }
 
+    /** @param pointTotal the new current point total */
     public void setPoints(int pointTotal) {
         points = pointTotal;
     }
 
+    /** @param bankedPointTotal the new banked point total */
     public void setBankedPoints(int bankedPointTotal) {
         bankedPoints = bankedPointTotal;
     }
 
+    /** @param enemyCount the new number of enemies destroyed */
     public void setEnemiesDestroyed(int enemyCount) {
         enemiesDestroyed = enemyCount;
     }
 
+    /** @param active whether the flight should remain active */
     public void setFlightActive(boolean active) {
         flightActive = active;
     }
 
+    /** Displays the jet's current information and deployment location. */
     public void displayInfo() {
     System.out.println("");
     System.out.println("Jet Name: " + getJet());
@@ -142,12 +170,19 @@ public void setPlayerLocation(DeploymentLocation location)
     }
 }
 
+    /** Displays the current and banked points. */
     public void displayPoints() {
         System.out.println("Current Points: " + getPoints());
         System.out.println("Banked Points: " + getBankedPoints());
     }
 
     // Randomly chooses an event
+    /**
+     * Chooses an event based on the selected deployment location.
+     * Precondition: a deployment location has been selected.
+     * Postcondition: an event is chosen and resources are checked if the flight remains active.
+     * @param scanner reads the player's choices
+     */
     public void randomEvent(Scanner scanner) {
 
         int eventChance = (int)(Math.random() * 100) + 1;
@@ -167,8 +202,12 @@ if (isFlightActive()) {
 }
     }
 
-   
+
     // Decides whether to continue flying or return to base
+    /**
+     * Lets the player continue flying or return to base.
+     * @param scanner reads the player's choice
+     */
 public void flightDecision(Scanner scanner) {
 
     String choice = "";
@@ -204,6 +243,10 @@ public void flightDecision(Scanner scanner) {
 }
 
     // Returns to base, banks points and has option to end game without risking points
+    /**
+     * Refills resources and banks points when the player returns to base.
+     * @param scanner reads whether the player wants to continue or end
+     */
     public void returnToBase(Scanner scanner) {
 
         if (getEnemiesDestroyed() >= playerLocation.getWinQuota()) {
@@ -266,6 +309,7 @@ public void flightDecision(Scanner scanner) {
         }
     }
 
+    /** Ends the flight and displays the final information. */
     public void gameOver() {
 
         setFlightActive(false);
@@ -279,6 +323,10 @@ public void flightDecision(Scanner scanner) {
     }
 
     // unknown aircraft with chance of being an enemy or ally
+    /**
+     * Lets the player investigate an unknown aircraft or continue flying.
+     * @param scanner reads the player's choice
+     */
     public void unknownAircraft(Scanner scanner) {
 
         String choice = "";
@@ -319,6 +367,10 @@ public void flightDecision(Scanner scanner) {
     }
 
     // enemy ground targets with normal forces and anti-air forces with chance of being destroyed or shooting down the player
+    /**
+     * Handles enemy ground targets and the player's choices.
+     * @param scanner reads the player's choice
+     */
     public void enemyGround(Scanner scanner) {
 
         int targetType = (int)(Math.random() * 4) + 1;
@@ -425,6 +477,10 @@ public void flightDecision(Scanner scanner) {
     }
 
     // enemy aircraft that you can shoot or evade with chance of winning or losing in a dogfight
+    /**
+     * Handles enemy aircraft and the player's choices.
+     * @param scanner reads the player's choice
+     */
     public void enemyAircraft(Scanner scanner) {
 
         String choice = "";
@@ -488,6 +544,12 @@ public void flightDecision(Scanner scanner) {
     }
 
     // Checks fuel and weapons and decide next action based on resources
+    /**
+     * Checks the player's resources and asks what to do next.
+     * Precondition: a deployment location has been selected.
+     * Postcondition: the player is prompted to continue or return, unless the flight has ended.
+     * @param scanner reads the player's choice
+     */
     public void checkResources(Scanner scanner) { // fuel is able to reach negative values and the game will continue until the user decides to return to base or crash - Leo
 if (!isFlightActive()) {
     return;
@@ -496,10 +558,10 @@ if (!isFlightActive()) {
 
             System.out.println("You have destroyed enough enemies to complete the mission.");
 
-           
+
         }
         if(getFuel() <=0){
-            
+
             System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
 
             gameOver();
@@ -509,23 +571,23 @@ if (!isFlightActive()) {
 
             System.out.println("You are on the very last bit of fuel and MUST return to base.");
 
-            
+
         }
         else if (getFuel() < 1000) {
 
             System.out.println("You are low on fuel and should return to base.");
 
-            
+
         }
          if (getNumMissiles() <= 2 || getNumBombs() <= 2) {
 
             System.out.println("You are low on missiles or bombs and should return to base.");
 
-            
+
         }
-       
+
 
             flightDecision(scanner);
-        
+
     }
 }
