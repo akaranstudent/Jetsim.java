@@ -60,7 +60,7 @@ public class simRunner {
 /**
  * Creates the deployment locations available to the player.
  */
-DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 15, 35, 60, 3);
+DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 3);
 DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 20, 45, 4);
 DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 30, 40, 5);
 

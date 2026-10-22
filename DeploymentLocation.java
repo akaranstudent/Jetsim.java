@@ -72,8 +72,8 @@ private static int locationsCreated = 0;
     public String toString() {
         return "Deployment Location: " + name + "\n" +
                "Aircraft Chance: " + aircraftChance + "%\n" +
-               "Ground Chance: " + groundChance + "%\n" +
-               "Unknown Aircraft Chance: " + unknownAircraftChance + "%\n" +
+               "Ground Chance: " + (groundChance - aircraftChance) + "%\n" +
+               "Unknown Aircraft Chance: " + (unknownAircraftChance - groundChance) + "%\n" +
                "Win Quota: " + winQuota;
     }
 
