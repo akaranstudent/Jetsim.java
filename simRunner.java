@@ -104,6 +104,7 @@ System.out.println("Total deployment locations created: "
 System.out.println("Choose a location to deploy to: Coastal Base, Desert Base, or Mountain Base.");
 for (int i = 0; i < locations.length; i++) {
     System.out.println(locations[i].toString());
+    System.out.println("");
 }
 
 String choice2 = scanner.nextLine().toLowerCase().trim();
