@@ -160,11 +160,12 @@ public void setPlayerLocation(DeploymentLocation location)
     unknownAircraft(scanner);
 } else {
     System.out.println("No events occurred during this part of the flight.");
-    checkResources(scanner);
+    ;
 }
+checkResources(scanner);
     }
 
-    // Decides whether to continue flying or return to base
+   
     // Decides whether to continue flying or return to base
 public void flightDecision(Scanner scanner) {
 
@@ -494,11 +495,18 @@ public void flightDecision(Scanner scanner) {
 
            
         }
-         if (getFuel() <= 500) {
-
+        if(getFuel() <=0){
+            
             System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
 
             gameOver();
+            return;
+        } 
+        else if (getFuel() <= 500) {
+
+            System.out.println("You are on the very last bit of fuel and MUST return to base.");
+
+            
         }
         else if (getFuel() < 1000) {
 

@@ -72,8 +72,7 @@ for (DeploymentLocation location : locations) {
     quotaIndex++;
 }
 
-// Three array algorithms
-// Three array algorithms
+
 int locationsMeetingQuota =
     DeploymentLocation.countLocationsWithQuota(locations, 3);
 
@@ -83,13 +82,13 @@ DeploymentLocation foundLocation =
 double averageQuota =
     DeploymentLocation.calculateAverageQuota(locations);
 
-// Use the results without changing the game's output
+System.out.println("Locations meeting the minimum quota: " + locationsMeetingQuota);
 if (locationsMeetingQuota < 0 || averageQuota < 0
         || (foundLocation != null && foundLocation.getWinQuota() < 0)) {
     throw new IllegalStateException("Invalid deployment location data.");
 }
 
-// Your original indexed loop
+
 for (int i = 0; i < locations.length; i++) {
     System.out.println(locations[i].toString());
 }
