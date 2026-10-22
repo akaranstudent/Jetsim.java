@@ -49,15 +49,51 @@ public class simRunner {
             default:
                 return;
         }
+
 DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 15, 35, 60, 3);
 DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 20, 45, 5);
 DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 30, 40, 7);
-DeploymentLocation[] locations = {coastalBase, desertBase, mountainBase};
+
+// Object array created using new Type[size]
+DeploymentLocation[] locations = new DeploymentLocation[3];
+locations[0] = coastalBase;
+locations[1] = desertBase;
+locations[2] = mountainBase;
+
 DeploymentLocation playerLocation;
 
-for(int i=0;i<locations.length;i++){
+// Primitive array created using new Type[size]
+int[] missionQuotas = new int[locations.length];
+
+// Enhanced for-each loop
+int quotaIndex = 0;
+for (DeploymentLocation location : locations) {
+    missionQuotas[quotaIndex] = location.getWinQuota();
+    quotaIndex++;
+}
+
+// Three array algorithms
+// Three array algorithms
+int locationsMeetingQuota =
+    DeploymentLocation.countLocationsWithQuota(locations, 3);
+
+DeploymentLocation foundLocation =
+    DeploymentLocation.findLocationByName(locations, "Coastal Base");
+
+double averageQuota =
+    DeploymentLocation.calculateAverageQuota(locations);
+
+// Use the results without changing the game's output
+if (locationsMeetingQuota < 0 || averageQuota < 0
+        || (foundLocation != null && foundLocation.getWinQuota() < 0)) {
+    throw new IllegalStateException("Invalid deployment location data.");
+}
+
+// Your original indexed loop
+for (int i = 0; i < locations.length; i++) {
     System.out.println(locations[i].toString());
 }
+
 String choice2 = scanner.nextLine().toLowerCase().trim();
 while (!choice2.equals("coastal base") && !choice2.equals("desert base") && !choice2.equals("mountain base")) {
             System.out.println("Invalid location choice. Please type Coastal Base, Desert Base, or Mountain Base.");
