@@ -88,7 +88,7 @@ if (locationsMeetingQuota < 0 || averageQuota < 0
     throw new IllegalStateException("Invalid deployment location data.");
 }
 
-
+System.out.println("Choose a location to deploy to: Coastal Base, Desert Base, or Mountain Base.");
 for (int i = 0; i < locations.length; i++) {
     System.out.println(locations[i].toString());
 }

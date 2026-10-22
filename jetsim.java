@@ -162,7 +162,9 @@ public void setPlayerLocation(DeploymentLocation location)
     System.out.println("No events occurred during this part of the flight.");
     ;
 }
-checkResources(scanner);
+if (isFlightActive()) {
+    checkResources(scanner);
+}
     }
 
    
@@ -184,17 +186,16 @@ public void flightDecision(Scanner scanner) {
 
     if ("continue".equals(choice)) {
 
-        setFuel(getFuel() - 500);
+    setFuel(getFuel() - 500);
 
-        if (getFuel() <= 500) {
-            System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
+    if (getFuel() <= 0) {
+        System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
 
-            gameOver();
-        }
-        else {
-            displayInfo();
-            displayPoints();
-        }
+        gameOver();
+        return;
+    }
+  displayInfo();
+  displayPoints();
     }
     else if ("return".equals(choice)) {
 
@@ -488,7 +489,9 @@ public void flightDecision(Scanner scanner) {
 
     // Checks fuel and weapons and decide next action based on resources
     public void checkResources(Scanner scanner) { // fuel is able to reach negative values and the game will continue until the user decides to return to base or crash - Leo
-
+if (!isFlightActive()) {
+    return;
+}
         if (getEnemiesDestroyed() >= playerLocation.getWinQuota()) {
 
             System.out.println("You have destroyed enough enemies to complete the mission.");
