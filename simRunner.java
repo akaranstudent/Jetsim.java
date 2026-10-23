@@ -60,6 +60,7 @@ public class simRunner {
 /**
  * Creates the deployment locations available to the player.
  */
+// QUESTION: Why did you choose these specific chances for the deployment locations? 
 DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 3);
 DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 20, 45, 4);
 DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 30, 40, 5);

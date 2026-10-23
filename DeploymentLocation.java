@@ -7,6 +7,8 @@ private int aircraftChance;
 private int groundChance;
 private int unknownAircraftChance;
 private int winQuota;
+// STYLE: Java class names conventionally use PascalCase, so Jetsim matches the naming style used by DeploymentLocation.
+
 
 /**
  * Counts how many DeploymentLocation objects have been created.
@@ -132,7 +134,7 @@ private static int locationsCreated = 0;
      * Postcondition: returns the average quota, or 0.0 if no locations exist.
      * @param locations the array of locations to check
      * @return the average quota, or 0.0 if there are no locations
-     */
+     */ 
     public static double calculateAverageQuota(
             DeploymentLocation[] locations) {
         if (locations == null) {
@@ -152,7 +154,7 @@ private static int locationsCreated = 0;
         if (count == 0) {
             return 0.0;
         }
-
+        // PRAISE: It was smart to cast the total to double before division here.
         return (double) total / count;
     }
 

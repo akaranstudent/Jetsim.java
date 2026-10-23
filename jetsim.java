@@ -226,7 +226,7 @@ public void flightDecision(Scanner scanner) {
     if ("continue".equals(choice)) {
 
     setFuel(getFuel() - 500);
-
+// SUGGESTION: Consider extracting repeated loops into a helper method to reduce duplicated code and make it cleaner.
     if (getFuel() <= 0) {
         System.out.println("You have run out of fuel and crashed before you could reach the airbase.");
 
@@ -567,6 +567,7 @@ if (!isFlightActive()) {
             gameOver();
             return;
         } 
+        // BUG: The warning says the player MUST return, but flightDecision() still accepts "continue", allowing the player to run out of fuel and crash.
         else if (getFuel() <= 500) {
 
             System.out.println("You are on the very last bit of fuel and MUST return to base.");
