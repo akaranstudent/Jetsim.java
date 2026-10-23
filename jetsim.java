@@ -197,6 +197,7 @@ public void setPlayerLocation(DeploymentLocation location)
     System.out.println("No events occurred during this part of the flight.");
     ;
 }
+    // PRAISE: Using flightActive to control the main loop makes game termination clear and lets events such as crashing or ending the flight stop gameplay.
 if (isFlightActive()) {
     checkResources(scanner);
 }
@@ -570,9 +571,9 @@ if (!isFlightActive()) {
         // BUG: The warning says the player MUST return, but flightDecision() still accepts "continue", allowing the player to run out of fuel and crash.
         else if (getFuel() <= 500) {
 
-            System.out.println("You are on the very last bit of fuel and MUST return to base.");
-
-
+            System.out.println("You are on the very last bit of fuel and MUST return to base. Autopilot is engaged to return to base.");
+returnToBase(scanner);
+return;
         }
         else if (getFuel() < 1000) {
 

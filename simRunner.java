@@ -62,7 +62,7 @@ public class simRunner {
  */
 // QUESTION: Why did you choose these specific chances for the deployment locations? 
 DeploymentLocation coastalBase = new DeploymentLocation("Coastal Base", 3);
-DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 20, 45, 4);
+DeploymentLocation desertBase = new DeploymentLocation("Desert Base", 10, 30, 45, 4);
 DeploymentLocation mountainBase = new DeploymentLocation("Mountain Base", 20, 30, 40, 5);
 
 // Object array created using new Type[size]
@@ -136,7 +136,6 @@ while (!choice2.equals("coastal base") && !choice2.equals("desert base") && !cho
        // Sets the selected location for the player's jet.
        playerJet.setPlayerLocation(playerLocation);
         playerJet.displayInfo();
-
         // Dynamic game loop controlled by the flightActive boolean
         while (playerJet.isFlightActive()) {
 
