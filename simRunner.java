@@ -3,7 +3,7 @@ import java.util.Scanner;
 /**
  * Runs the Jet Simulator and lets the player choose a jet and location.
  */
-public class simRunner {
+public class SimRunner {
 
     /**
      * Starts the simulator and handles the player's choices.
@@ -13,16 +13,16 @@ public class simRunner {
 
         Scanner scanner = new Scanner(System.in);
 
-        jetsim a10 = new jetsim("A-10", 4, 8, 706, 5020);
-        jetsim f16 = new jetsim("F-16", 6, 4, 2120, 3160);
-        jetsim f18 = new jetsim("F/A-18", 5, 5, 1915, 6200);
+        JetSim a10 = new JetSim("A-10", 4, 8, 706, 5020);
+        JetSim f16 = new JetSim("F-16", 6, 4, 2120, 3160);
+        JetSim f18 = new JetSim("F/A-18", 5, 5, 1915, 6200);
 
         System.out.println("Welcome to the Jet Simulator! To play, you will choose a jet along with a location to deploy at and engage in various missions. Your goal is to destroy enemy targets and earn points. Be careful, as running out of fuel can lead to mission failure while running out of weapons puts you at higher risk. Returning to base refuels/rearms and secures your points permamently but returning without meeting quota causes you to lose points. Enter your choices as seen on the screen");
 
         System.out.println("Please enter the name of a jet to fly:");
 
 
-        jetsim[] jets = {a10, f16, f18};
+        JetSim[] jets = {a10, f16, f18};
 
         for (int i = 0; i < jets.length; i++) {
             jets[i].displayInfo();
@@ -38,7 +38,7 @@ public class simRunner {
             choice = scanner.nextLine().toLowerCase().trim();
         }
 
-        jetsim playerJet;
+        JetSim playerJet;
 
         switch (choice) {
             case "a-10":

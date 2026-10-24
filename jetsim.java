@@ -19,7 +19,7 @@ Bad things: It doesnt have any try excepts or other railguards for user input. A
 /**
  * Stores the jet's resources and runs the player's flight decisions and events.
  */
-public class jetsim {
+public class JetSim {
 
     private String jet;
     private int numMissiles;
@@ -49,7 +49,7 @@ public class jetsim {
      * @param speed the maximum speed
      * @param fuelAmount the starting fuel amount
      */
-    public jetsim(String jetName, int missileCount, int bombCount, int speed, int fuelAmount) {
+    public JetSim(String jetName, int missileCount, int bombCount, int speed, int fuelAmount) {
         jet = jetName;
         numMissiles = missileCount;
         numBombs = bombCount;
@@ -530,7 +530,7 @@ public void flightDecision(Scanner scanner) {
         }
         else if ("evade".equals(choice)) {
 
-            int enemySpeed = (int)(Math.random() * 1301) + 1500;
+            int enemySpeed = (int)(Math.random() * 1301) + 500;
 
             if (getMaxSpeed() > enemySpeed) {
 
@@ -569,10 +569,11 @@ if (!isFlightActive()) {
             return;
         } 
         // BUG: The warning says the player MUST return, but flightDecision() still accepts "continue", allowing the player to run out of fuel and crash.
+        //the choice for the user to continue and crash is a feature as otherwise the fuel cannot reach zero and crash basically garunteeing the players saftey.
         else if (getFuel() <= 500) {
 
-            System.out.println("You are on the very last bit of fuel and MUST return to base. Autopilot is engaged to return to base.");
-returnToBase(scanner);
+            System.out.println("You are on the very last bit of fuel and MUST return to base.");
+
 return;
         }
         else if (getFuel() < 1000) {
